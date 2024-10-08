@@ -58,10 +58,18 @@ require(
                     const graphicsLayer = new GraphicsLayer({
                         featureReduction: {
                             type: "cluster",
-                            clusterRadius: "500px", 
+                            clusterRadius: "150000px",
                             popupTemplate: {
                                 title: "Cluster Summary",
-                                content: "This cluster represents {cluster_count} cities."
+                                content: function (event) {
+                                    const graphics = event.graphic.attributes.clusteredGraphics;
+                                    let contentString = "<ul>";
+                                    graphics.forEach((graphic) => {
+                                        contentString += `<li>${graphic.attributes.city}, ${graphic.attributes.state}</li>`;
+                                    });
+                                    contentString += "</ul>"; 
+                                    return contentString;
+                                }
                             },
                             clusterMinSize: "24px",
                             clusterMaxSize: "60px",
@@ -85,7 +93,7 @@ require(
                     });
                     map.add(graphicsLayer);
 
-                    // pnts
+                    // pnts = {name: {city: "city", state: "state", coord: [x, y]}}
                     for (const [key, value] of Object.entries(myStuff)) {
                         const point = {
                             type: "point", 
@@ -96,7 +104,7 @@ require(
                   
                         const markerSymbol = {
                             type: "simple-marker", 
-                            color: [25, 75, 100],
+                            color: [0, 0, 255],
                             outline: {
                                 color: [255, 255, 255],
                                 width: 2
@@ -106,6 +114,10 @@ require(
                         const pointGraphic = new Graphic({
                             geometry: point,
                             symbol: markerSymbol,
+                            attributes: {
+                                city: value.city,
+                                state: value.state
+                            },
                             popupTemplate: {
                                 title: key + ": " + value.city + ", " + value.state
                             }
@@ -114,7 +126,7 @@ require(
                         graphicsLayer.add(pointGraphic);
                     }
                     
-                    // Add a click event to zoom to the point
+                    // zoom to point on click
                     view.on("click", function(event) {
                         view.hitTest(event).then(function(response) {
                             var results = response.results;
@@ -133,7 +145,7 @@ require(
                         });
                     });
 
-                    // search widget
+                    // search cities
                     var searchWidget = new Search({
                         view: view,
                         sources: [{
