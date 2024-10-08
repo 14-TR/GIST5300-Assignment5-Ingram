@@ -55,14 +55,13 @@ require(
                 });
 
                 const initMap = function() {
-                    // Create a graphics layer with clustering enabled
                     const graphicsLayer = new GraphicsLayer({
                         featureReduction: {
                             type: "cluster",
-                            clusterRadius: "100px", // Adjust radius for clustering
+                            clusterRadius: "500px", 
                             popupTemplate: {
                                 title: "Cluster Summary",
-                                content: "This cluster contains {cluster_count} points."
+                                content: "This cluster represents {cluster_count} cities."
                             },
                             clusterMinSize: "24px",
                             clusterMaxSize: "60px",
@@ -86,7 +85,7 @@ require(
                     });
                     map.add(graphicsLayer);
 
-                    // Add points to the map
+                    // pnts
                     for (const [key, value] of Object.entries(myStuff)) {
                         const point = {
                             type: "point", 
@@ -134,7 +133,7 @@ require(
                         });
                     });
 
-                    // Add a search widget
+                    // search widget
                     var searchWidget = new Search({
                         view: view,
                         sources: [{
