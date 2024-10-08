@@ -1,8 +1,6 @@
 var myStuff = {
-    "Graduate School": {city: "Fairbanks", state: "Alaska", "coord": [-147.776749, 64.835365] },
-    "Postdoc Place": {city: "Miami", state: "Florida", "coord": [-80.191788, 25.761681]},
-    "Current Residence": {city: "Laramie", state: "Wyoming", "coord": [-105.502, 41.3104]},
-    "Favorite Vacation": {city: "San Diego", state: "California", "coord": [-117.161087, 32.715736] }
+    "Survival School": {city: "Spokane", state: "Washington", "coord": [-117.426, 47.6588]},
+    "Bachelor's Place": {city: "Colorado Springs", state: "Colorado", "coord": [-104.8214, 38.8339]},
+    "Current Residence": {city: "Cheyenne", state: "Wyoming", "coord": [-104.802, 41.1398]},
+    "Favorite Vacation": {city: "Hungry Horse", state: "Montana", "coord": [-114.0652, 48.3917]}
 }
-
-
