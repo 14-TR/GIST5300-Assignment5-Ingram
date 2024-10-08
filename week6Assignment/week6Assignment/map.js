@@ -55,13 +55,39 @@ require(
                 });
 
                 const initMap = function() {
+                    // Create a graphics layer with clustering enabled
                     const graphicsLayer = new GraphicsLayer({
-                        clusteringEnabled: true // Enable clustering
+                        featureReduction: {
+                            type: "cluster",
+                            clusterRadius: "100px", // Adjust radius for clustering
+                            popupTemplate: {
+                                title: "Cluster Summary",
+                                content: "This cluster contains {cluster_count} points."
+                            },
+                            clusterMinSize: "24px",
+                            clusterMaxSize: "60px",
+                            labelingInfo: [{
+                                deconflictionStrategy: "none",
+                                symbol: {
+                                    type: "text",
+                                    color: "white",
+                                    font: {
+                                        size: 12,
+                                        family: "Arial",
+                                        weight: "bold"
+                                    }
+                                },
+                                labelPlacement: "center-center",
+                                labelExpressionInfo: {
+                                    expression: "Text($feature.cluster_count, '#,###')"
+                                }
+                            }]
+                        }
                     });
                     map.add(graphicsLayer);
 
+                    // Add points to the map
                     for (const [key, value] of Object.entries(myStuff)) {
-                        console.log(key, value);
                         const point = {
                             type: "point", 
                             x: value.coord[0],
@@ -71,7 +97,7 @@ require(
                   
                         const markerSymbol = {
                             type: "simple-marker", 
-                            color: [0, 0, 255],
+                            color: [25, 75, 100],
                             outline: {
                                 color: [255, 255, 255],
                                 width: 2
